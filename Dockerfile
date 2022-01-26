@@ -1,7 +1,7 @@
 FROM golang:alpine AS builder
 RUN apk update && apk add --no-cache git
 WORKDIR /go/src/v2ray.com/core
-RUN git clone --progress -b v5.0.3 https://github.com/v2fly/v2ray-core.git . && \
+RUN git clone --progress -b v4.44.0 https://github.com/v2fly/v2ray-core.git . && \
     go mod download && \
     CGO_ENABLED=0 go build -o /tmp/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
 
@@ -9,5 +9,6 @@ FROM alpine
 COPY --from=builder /tmp/v2ray /usr/bin
 
 ADD v2ray.sh /v2ray.sh
+ADD config.json /etc/config.json
 RUN chmod +x /v2ray.sh
 CMD /v2ray.sh
