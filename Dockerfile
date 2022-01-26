@@ -9,5 +9,6 @@ FROM alpine
 COPY --from=builder /tmp/v2ray /usr/bin
 
 ADD v2ray.sh /v2ray.sh
+ADD config.json /config.json
 RUN chmod +x /v2ray.sh
 CMD /v2ray.sh
